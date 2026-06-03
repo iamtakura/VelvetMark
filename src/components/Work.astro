@@ -1,0 +1,355 @@
+---
+const projects = [
+  {
+    num: "01",
+    title: "Ombré Rosée Atelier",
+    tag: "Beauty & Lifestyle",
+    desc: "A full brand experience for a luxury mobile beauty service — built to attract and convert high-end clients.",
+    url: "https://iamtakura.github.io/Ombr-Ros-e-Atelier-Aesthetics/",
+    img: "/screenshots/ombre-rosee.png"
+  },
+  {
+    num: "02",
+    title: "Cafe Delights",
+    tag: "Food & Hospitality",
+    desc: "A multi-page restaurant site that turns online visitors into walk-in customers.",
+    url: "https://iamtakura.github.io/cafe-delights/",
+    img: "/screenshots/cafe-delights.png"
+  },
+  {
+    num: "03",
+    title: "FU Studio",
+    tag: "Photography & Creative Services",
+    desc: "A full landing page for a photography studio — dark, editorial and built to convert.",
+    url: "https://iamtakura.github.io/fu-studio-website/",
+    img: "/screenshots/fu-studio.png"
+  }
+];
+---
+
+<section id="work" class="work-section">
+  <div class="container header-container">
+    <div class="section-header">
+      <h2 class="section-title">Our Work</h2>
+    </div>
+  </div>
+
+  <div class="project-rows-wrapper">
+    {projects.map((project, idx) => {
+      const isEven = idx % 2 === 1;
+      return (
+        <div class={`project-row ${isEven ? 'row-alternate' : ''}`} id={`project-row-${project.num}`}>
+          
+          <!-- Left side (60% width) - Text Side -->
+          <div class="project-text-side">
+            <!-- Large faded project number (01, 02, 03) as absolute background -->
+            <div class="project-bg-num">{project.num}</div>
+            
+            <div class="text-content">
+              <!-- Industry tag: Outfit, small, uppercase, letter-spacing: 0.2em, var(--accent) -->
+              <span class="project-industry">{project.tag}</span>
+              
+              <!-- Project name: Bebas Neue, clamp(48px, 7vw, 96px), var(--text-primary) -->
+              <h3 class="project-name-heading">{project.title}</h3>
+              
+              <!-- One line description: Outfit, var(--text-muted) -->
+              <p class="project-row-desc">{project.desc}</p>
+              
+              <!-- Link: Outfit, var(--accent), underline on hover -->
+              <a href={project.url} target="_blank" rel="noopener noreferrer" class="project-row-link">
+                View Project &rarr;
+              </a>
+            </div>
+          </div>
+
+          <!-- Right side (40% width) - Image Side -->
+          <div class="project-image-side">
+            <div class="image-wrapper">
+              <img src={project.img} alt={`${project.title} Screenshot`} class="project-row-img" />
+            </div>
+          </div>
+
+        </div>
+      );
+    })}
+  </div>
+</section>
+
+<style>
+  .work-section {
+    background-color: var(--bg);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 10rem 0 0 0; /* Keep padding consistent, footer handles bottom */
+    width: 100%;
+  }
+
+  .header-container {
+    padding-bottom: 4rem;
+  }
+
+  .section-header {
+    max-width: 600px;
+  }
+
+  .section-title {
+    font-family: var(--font-headlines);
+    font-size: clamp(36px, 6vw, 72px);
+    line-height: 1;
+    color: var(--text-primary);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+
+  .project-rows-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 2rem;
+  }
+
+  /* Full width, min-height 400px, background var(--surface) */
+  .project-row {
+    display: flex;
+    min-height: 450px;
+    width: 100%;
+    background-color: var(--surface);
+    position: relative;
+    overflow: hidden;
+    /* Thin crimson bottom border separating each row */
+    border-bottom: 1px solid var(--accent);
+  }
+
+  /* Alternate layout per row */
+  .row-alternate {
+    flex-direction: row-reverse;
+  }
+
+  /* Left side (60% width) */
+  .project-text-side {
+    width: 60%;
+    position: relative;
+    padding: 5rem 6rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 2;
+  }
+
+  .text-content {
+    position: relative;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    max-width: 580px;
+  }
+
+  /* Large faded project number positioned absolutely as background element */
+  .project-bg-num {
+    position: absolute;
+    top: 50%;
+    left: 4rem;
+    transform: translateY(-50%);
+    font-family: var(--font-headlines);
+    font-size: 200px; /* ~200px */
+    color: var(--accent);
+    opacity: 0.08; /* var(--accent) at 8% opacity */
+    pointer-events: none;
+    z-index: 1;
+    user-select: none;
+    line-height: 1;
+  }
+
+  /* Alternate row number alignment to avoid overlap */
+  .row-alternate .project-bg-num {
+    left: auto;
+    right: 4rem;
+  }
+
+  /* Industry tag: small, uppercase, letter-spacing: 0.2em, var(--accent), Outfit */
+  .project-industry {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    display: block;
+  }
+
+  /* Project name: Bebas Neue, clamp(48px, 7vw, 96px), var(--text-primary) */
+  .project-name-heading {
+    font-family: var(--font-headlines);
+    font-size: clamp(48px, 7vw, 96px);
+    line-height: 0.95;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+  }
+
+  /* One line description: Outfit, var(--text-muted) */
+  .project-row-desc {
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* Link: Outfit, var(--accent), underline on hover */
+  .project-row-link {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: fit-content;
+    margin-top: 0.5rem;
+    transition: var(--transition-fast);
+  }
+
+  .project-row-link:hover {
+    text-decoration: underline;
+    color: var(--accent-hover);
+  }
+
+  /* Right side (40% width) - Image Side */
+  .project-image-side {
+    width: 40%;
+    position: relative;
+    overflow: hidden;
+    background-color: #0b0b0b;
+  }
+
+  .image-wrapper {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  /* Project screenshot, full height of row, object-fit: cover */
+  .project-row-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1), filter 0.6s ease;
+  }
+
+  /* On hover: slight brightness increase and scale 1.03 */
+  .project-image-side:hover .project-row-img {
+    transform: scale(1.03);
+    filter: brightness(1.1);
+  }
+
+  /* Responsive styling */
+  @media (max-width: 1024px) {
+    .project-text-side {
+      padding: 4rem 3rem;
+    }
+    
+    .project-bg-num {
+      font-size: 160px;
+      left: 2rem;
+    }
+    
+    .row-alternate .project-bg-num {
+      right: 2rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    /* Stack image on top, text below */
+    .project-row, .row-alternate {
+      flex-direction: column;
+      min-height: auto;
+    }
+
+    .project-image-side {
+      width: 100%;
+      height: 280px; /* Cover image aspect height on mobile */
+      order: -1; /* Image stacked on top */
+    }
+
+    .project-text-side {
+      width: 100%;
+      padding: 3rem 1.5rem;
+    }
+
+    /* Project name scales down but stays bold */
+    .project-name-heading {
+      font-size: 2.8rem;
+    }
+
+    .project-bg-num {
+      font-size: 110px;
+      left: 1rem;
+      top: 30%;
+    }
+
+    .row-alternate .project-bg-num {
+      right: auto;
+      left: 1rem;
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const initRowsTrigger = () => {
+    const rows = document.querySelectorAll('.project-row');
+    
+    rows.forEach(row => {
+      const heading = row.querySelector('.project-name-heading');
+      const imgSide = row.querySelector('.project-image-side');
+      
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: row,
+          start: 'top 85%',
+          toggleActions: 'play none none none'
+        }
+      });
+
+      // project name slides in from left
+      tl.fromTo(heading,
+        {
+          opacity: 0,
+          x: -50
+        },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 1.0,
+          ease: 'power3.out'
+        }
+      );
+
+      // image fades in from right
+      tl.fromTo(imgSide,
+        {
+          opacity: 0,
+          x: 50
+        },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 1.0,
+          ease: 'power3.out'
+        },
+        '-=0.7' // Staggered slightly
+      );
+    });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initRowsTrigger);
+  } else {
+    initRowsTrigger();
+  }
+</script>

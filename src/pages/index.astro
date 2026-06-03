@@ -1,0 +1,42 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import Work from '../components/Work.astro';
+import Services from '../components/Services.astro';
+import Process from '../components/Process.astro';
+import Pricing from '../components/Pricing.astro';
+import Contact from '../components/Contact.astro';
+---
+
+<Layout title="Velvetmark — We Build Websites That Put Your Business On The Map">
+	<Nav />
+	
+	<main>
+		<!-- Hero Section (100vh, headline animations) -->
+		<Hero />
+		
+		<!-- Selected Archive (Work Section - #work) -->
+		<Work />
+		
+		<!-- Capabilities (Services Section - #services) -->
+		<Services />
+		
+		<!-- Methodology (Process Section - #process) -->
+		<Process />
+		
+		<!-- Investment (Pricing Section - #pricing) -->
+		<Pricing />
+		
+		<!-- Contact & Footer (Contact Section - #contact) -->
+		<Contact />
+	</main>
+</Layout>
+
+<style>
+	main {
+		width: 100%;
+		position: relative;
+		overflow-x: hidden;
+	}
+</style>

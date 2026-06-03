@@ -1,0 +1,104 @@
+---
+import '../styles/global.css';
+
+interface Props {
+	title: string;
+	description?: string;
+}
+
+const { title, description = "Velvetmark - We Build Websites That Put Your Business On The Map" } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		
+		<!-- Google Fonts for Bebas Neue and Outfit -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+	</head>
+	<body>
+		<!-- Scroll Progress Bar -->
+		<div class="scroll-progress-bar" id="scroll-progress-bar" aria-hidden="true"></div>
+
+		<!-- Custom Crimson Cursor -->
+		<div class="custom-cursor" id="custom-cursor" aria-hidden="true"></div>
+		
+		<slot />
+
+		<script>
+			import { gsap } from 'gsap';
+
+			// Scroll Progress Bar Logic
+			const progressBar = document.getElementById('scroll-progress-bar');
+			const updateProgressBar = () => {
+				const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+				const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+				const percent = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+				if (progressBar) {
+					progressBar.style.width = percent + '%';
+				}
+			};
+			window.addEventListener('scroll', updateProgressBar);
+			updateProgressBar();
+
+			// Custom Cursor Logic with GSAP lag
+			const cursor = document.getElementById('custom-cursor');
+			if (cursor && window.matchMedia('(hover: hover)').matches) {
+				gsap.set(cursor, { xPercent: -50, yPercent: -50 });
+
+				const onMouseMove = (e: MouseEvent) => {
+					gsap.to(cursor, {
+						x: e.clientX,
+						y: e.clientY,
+						duration: 0.1, // Slight lag follow
+						overwrite: 'auto',
+						opacity: 1
+					});
+				};
+
+				const onMouseLeave = () => {
+					gsap.to(cursor, { opacity: 0 });
+				};
+
+				window.addEventListener('mousemove', onMouseMove);
+				document.addEventListener('mouseleave', onMouseLeave);
+
+				// Cursor Hover scaling on interactive elements
+				const attachHoverEffects = () => {
+					const hoverables = document.querySelectorAll('a, button, select, input, textarea, .project-card, .service-card, .pricing-card');
+					hoverables.forEach(item => {
+						item.addEventListener('mouseenter', () => {
+							gsap.to(cursor, { 
+								scale: 2.5, 
+								backgroundColor: 'rgba(204, 16, 51, 0.2)',
+								border: '1px solid var(--accent)'
+							});
+						});
+						item.addEventListener('mouseleave', () => {
+							gsap.to(cursor, { 
+								scale: 1, 
+								backgroundColor: 'var(--accent)',
+								border: 'none'
+							});
+						});
+					});
+				};
+
+				// Attach initially
+				attachHoverEffects();
+
+				// Re-attach in case of page mutation (dynamic lists)
+				const observer = new MutationObserver(attachHoverEffects);
+				observer.observe(document.body, { childList: true, subtree: true });
+			}
+		</script>
+	</body>
+</html>

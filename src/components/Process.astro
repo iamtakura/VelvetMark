@@ -1,0 +1,233 @@
+---
+const steps = [
+  {
+    num: "01",
+    title: "Discovery",
+    desc: "We learn your business, your goals, and what you need your website to do."
+  },
+  {
+    num: "02",
+    title: "Design & Build",
+    desc: "We get to work. You get a site that looks sharp and works flawlessly."
+  },
+  {
+    num: "03",
+    title: "Review",
+    desc: "You give feedback. We refine. Two rounds of revisions included — keeping the process focused and the outcome sharp.",
+    isReview: true // To render title variant
+  },
+  {
+    num: "04",
+    title: "Deploy",
+    desc: "Your site goes live. You go on the map."
+  }
+];
+---
+
+<section id="process" class="process-section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">How It Works</h2>
+    </div>
+
+    <div class="process-row">
+      {steps.map((step) => (
+        <div class="process-step">
+          <!-- Step number in Bebas Neue, large, var(--accent), low opacity (0.3) as background -->
+          <div class="step-bg-number" aria-hidden="true">{step.num}</div>
+          
+          <div class="step-info">
+            <h3 class="step-title">
+              {step.title} {step.isReview && <span class="step-title-note">(Up to 2 rounds)</span>}
+            </h3>
+            <p class="step-desc">{step.desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .process-section {
+    background-color: var(--bg);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 10rem 0;
+    overflow: hidden;
+  }
+
+  .section-header {
+    margin-bottom: 6rem;
+    max-width: 600px;
+  }
+
+  .section-tag {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    display: inline-block;
+    margin-bottom: 0.8rem;
+    text-transform: uppercase;
+  }
+
+  .section-title {
+    font-family: var(--font-headlines);
+    /* Heading: "How It Works" in Bebas Neue, clamp(36px, 6vw, 72px) */
+    font-size: clamp(36px, 6vw, 72px);
+    line-height: 1;
+    color: var(--text-primary);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+
+  /* 4 steps in a horizontal row on desktop, vertical stack on mobile */
+  .process-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 3.5rem;
+    position: relative;
+  }
+
+  .process-step {
+    position: relative;
+    background-color: var(--surface);
+    border: 1px solid rgba(255, 255, 255, 0.02);
+    padding: 3.5rem 2.2rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: 250px;
+    transition: var(--transition-smooth);
+    overflow: hidden;
+  }
+
+  .process-step:hover {
+    border-color: rgba(204, 16, 51, 0.15);
+    transform: translateY(-8px);
+  }
+
+  /* Step number in Bebas Neue, large, var(--accent), low opacity (0.3) as background */
+  .step-bg-number {
+    position: absolute;
+    bottom: -15px;
+    right: 5px;
+    font-family: var(--font-headlines);
+    font-size: 8rem;
+    line-height: 0.8;
+    color: var(--accent);
+    opacity: 0.3; /* Low opacity (0.3) as background */
+    pointer-events: none;
+    z-index: 1;
+    user-select: none;
+  }
+
+  .step-info {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Step title in Bebas Neue, var(--text-primary) */
+  .step-title {
+    font-family: var(--font-headlines);
+    font-size: 2.2rem;
+    line-height: 1.1;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    letter-spacing: 0.02em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .step-title-note {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--accent);
+    text-transform: none;
+    letter-spacing: 0;
+  }
+
+  /* Description in Outfit, var(--text-muted) */
+  .step-desc {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* Thin crimson connector line between steps on desktop */
+  .process-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -2.25rem; /* center align in gap */
+    width: 1.5rem;
+    height: 1px;
+    background-color: var(--accent);
+    opacity: 0.5;
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  /* Responsive styling */
+  @media (max-width: 1024px) {
+    .process-row {
+      flex-direction: column; /* vertical stack on mobile/tablet */
+      gap: 2.5rem;
+    }
+
+    .process-step {
+      min-height: auto;
+      padding: 3rem 2rem;
+    }
+
+    .process-step:not(:last-child)::after {
+      display: none; /* hide connector lines on vertical stack */
+    }
+
+    .step-bg-number {
+      bottom: -10px;
+      font-size: 7rem;
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const initScrollTrigger = () => {
+    // GSAP ScrollTrigger: steps animate in sequentially left to right on scroll
+    gsap.fromTo('.process-step',
+      {
+        opacity: 0,
+        y: 40
+      },
+      {
+        scrollTrigger: {
+          trigger: '.process-row',
+          start: 'top 85%',
+          toggleActions: 'play none none none'
+        },
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        stagger: 0.25, // Animates sequentially (left to right)
+        ease: 'power3.out'
+      }
+    );
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initScrollTrigger);
+  } else {
+    initScrollTrigger();
+  }
+</script>

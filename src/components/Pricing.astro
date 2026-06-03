@@ -1,0 +1,290 @@
+---
+const plans = [
+  {
+    name: "Landing Page",
+    price: "$150",
+    desc: "A single, highly optimized visual layout to launch your ideas and capture signups.",
+    highlighted: false
+  },
+  {
+    name: "Web Design & Development",
+    price: "$250",
+    desc: "From blueprint to custom-built launch — your complete high-performance website.",
+    highlighted: true
+  },
+  {
+    name: "Website Revamp",
+    price: "$220",
+    desc: "We strip back your slow, outdated layout and deploy a premium modern reconstruction.",
+    highlighted: false
+  },
+  {
+    name: "Web Deployment",
+    price: "$60",
+    desc: "We manage DNS mapping, SSL configuration, server tuning, and global CDN setup.",
+    highlighted: false
+  }
+];
+
+const whatsappNumber = "1234567890";
+---
+
+<section id="pricing" class="pricing-section">
+  <div class="container">
+    <div class="section-header text-center">
+      <h2 class="section-title">Simple Pricing</h2>
+      <p class="section-subtitle">50% to start. 50% on delivery. No surprises.</p>
+    </div>
+
+    <div class="pricing-grid">
+      {plans.map(plan => {
+        // Pre-filled message format: "Hi Velvetmark, I'm interested in [service name]."
+        const whatsappText = `Hi Velvetmark, I'm interested in ${plan.name}.`;
+        const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappText)}`;
+        
+        return (
+          <div class={`pricing-card ${plan.highlighted ? 'highlighted-card' : ''}`}>
+            {plan.highlighted && <span class="highlight-badge">RECOMMENDED</span>}
+            
+            <div class="card-left">
+              <h3 class="plan-name">{plan.name}</h3>
+              <p class="plan-desc">{plan.desc}</p>
+            </div>
+
+            <div class="card-right">
+              <div class="price-value">{plan.price}</div>
+              <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class={`pricing-btn ${plan.highlighted ? 'btn-primary' : 'btn-outline'}`}>
+                Get Started
+              </a>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+<style>
+  .pricing-section {
+    background-color: var(--surface); /* Surface background context */
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 10rem 0;
+  }
+
+  .text-center {
+    text-align: center;
+    margin: 0 auto 6rem;
+    max-width: 700px;
+  }
+
+  .section-tag {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    display: inline-block;
+    margin-bottom: 0.8rem;
+    text-transform: uppercase;
+  }
+
+  .section-title {
+    font-family: var(--font-headlines); /* Simple Pricing in Bebas Neue */
+    font-size: 4.5rem;
+    line-height: 1;
+    color: var(--text-primary);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+  }
+
+  .section-subtitle {
+    font-family: var(--font-body); /* 50% to start... in Outfit */
+    font-size: 1.25rem;
+    color: var(--text-muted); /* var(--text-muted) */
+    font-weight: 400;
+  }
+
+  /* 4 cards in CSS grid, 2x2 on desktop, 1 column on mobile */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
+  }
+
+  .pricing-card {
+    background-color: var(--bg);
+    border: 1px solid rgba(255, 255, 255, 0.02);
+    padding: 3.5rem;
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 2rem;
+    position: relative;
+    transition: var(--transition-smooth);
+    align-items: center;
+  }
+
+  .pricing-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  /* Highlight Web Design & Development card with 2px var(--accent) full border */
+  .highlighted-card {
+    border: 2px solid var(--accent);
+    box-shadow: 0 15px 45px rgba(204, 16, 51, 0.1);
+  }
+
+  .highlighted-card:hover {
+    border-color: var(--accent-hover);
+    box-shadow: 0 15px 55px rgba(204, 16, 51, 0.15);
+  }
+
+  .highlight-badge {
+    position: absolute;
+    top: 0;
+    left: 40px;
+    transform: translateY(-50%);
+    background-color: var(--accent);
+    color: #FFFFFF;
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.4rem 1rem;
+    letter-spacing: 0.1em;
+  }
+
+  /* Card Left */
+  .card-left {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .plan-name {
+    font-family: var(--font-headlines);
+    font-size: 2.2rem;
+    color: var(--text-primary);
+    line-height: 1.1;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  .plan-desc {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* Card Right */
+  .card-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 1.5rem;
+    border-left: 1px solid rgba(255, 255, 255, 0.05);
+    padding-left: 2rem;
+  }
+
+  /* Price displayed in Bebas Neue, clamp(36px, 5vw, 64px), var(--accent) */
+  .price-value {
+    font-family: var(--font-headlines);
+    font-size: clamp(36px, 5vw, 64px);
+    color: var(--accent);
+    line-height: 1;
+    letter-spacing: 0.02em;
+  }
+
+  .pricing-btn {
+    width: 100%;
+    text-align: center;
+    padding: 1rem 0;
+    display: block;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    transition: var(--transition-smooth);
+    border-radius: 0;
+  }
+
+  .btn-outline {
+    background-color: transparent;
+    color: var(--text-primary);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .btn-outline:hover {
+    border-color: var(--accent);
+    background-color: rgba(204, 16, 51, 0.05);
+    color: var(--accent);
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 1024px) {
+    .pricing-card {
+      grid-template-columns: 1fr;
+      padding: 3rem 2.5rem;
+    }
+    
+    .card-right {
+      border-left: none;
+      padding-left: 0;
+      align-items: flex-start;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 1.5rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .section-title {
+      font-size: 3.5rem;
+    }
+
+    .pricing-grid {
+      grid-template-columns: 1fr; /* 1 column on mobile */
+      gap: 2.5rem;
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const initScrollTrigger = () => {
+    // GSAP ScrollTrigger: staggered fade + translateY(40px) on scroll into view
+    gsap.fromTo('.pricing-card',
+      {
+        opacity: 0,
+        y: 40
+      },
+      {
+        scrollTrigger: {
+          trigger: '.pricing-grid',
+          start: 'top 85%',
+          toggleActions: 'play none none none'
+        },
+        opacity: 1,
+        y: 0,
+        duration: 1.0,
+        stagger: 0.15,
+        ease: 'power3.out'
+      }
+    );
+  };
+
+  // Trigger animations
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initScrollTrigger);
+  } else {
+    initScrollTrigger();
+  }
+</script>

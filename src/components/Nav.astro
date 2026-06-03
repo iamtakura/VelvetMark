@@ -1,0 +1,224 @@
+---
+---
+
+<nav class="nav-container">
+  <div class="nav-content container">
+    <a href="#hero" class="nav-logo">Velvetmark</a>
+    
+    <!-- Desktop Menu Links -->
+    <div class="nav-links">
+      <a href="#work" class="nav-link">Work</a>
+      <a href="#services" class="nav-link">Services</a>
+      <a href="#process" class="nav-link">Process</a>
+      <a href="#pricing" class="nav-link">Pricing</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </div>
+
+    <!-- Mobile Navigation Toggle Button -->
+    <button class="mobile-toggle" aria-label="Toggle menu" id="mobile-toggle">
+      <span class="line"></span>
+      <span class="line"></span>
+      <span class="line"></span>
+    </button>
+  </div>
+
+  <!-- Mobile Drawer Menu -->
+  <div class="mobile-menu" id="mobile-menu">
+    <div class="mobile-menu-links">
+      <a href="#work" class="mobile-link">Work</a>
+      <a href="#services" class="mobile-link">Services</a>
+      <a href="#process" class="mobile-link">Process</a>
+      <a href="#pricing" class="mobile-link">Pricing</a>
+      <a href="#contact" class="mobile-link">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<style>
+  .nav-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100; /* Fixed position, full width, z-index 100 */
+    transition: var(--transition-smooth);
+    background-color: transparent;
+    border-bottom: 1px solid transparent;
+  }
+
+  /* Scroll style - Blurs to rgba(14,14,14,0.85) with backdrop-filter */
+  .nav-container.scrolled {
+    background-color: rgba(14, 14, 14, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 0.5rem 0;
+  }
+
+  .nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 90px;
+    transition: var(--transition-smooth);
+  }
+
+  .nav-container.scrolled .nav-content {
+    height: 70px;
+  }
+
+  .nav-logo {
+    font-family: var(--font-headlines);
+    font-size: 24px; /* Left: "Velvetmark" in Bebas Neue, 24px */
+    color: var(--text-primary); /* var(--text-primary) */
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: var(--transition-fast);
+  }
+
+  .nav-logo:hover {
+    color: var(--accent);
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+  }
+
+  .nav-link {
+    font-family: var(--font-body); /* Right: links in Outfit */
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-muted); /* var(--text-muted) */
+    text-decoration: none;
+    transition: var(--transition-fast);
+    padding: 0.5rem 0;
+  }
+
+  .nav-link:hover {
+    color: var(--accent); /* changes to var(--accent) on hover */
+  }
+
+  /* Mobile menu button */
+  .mobile-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 20px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 1010;
+    padding: 0;
+  }
+
+  .mobile-toggle .line {
+    width: 100%;
+    height: 2px;
+    background-color: var(--text-primary);
+    transition: var(--transition-smooth);
+  }
+
+  /* Mobile Menu Drawer */
+  .mobile-menu {
+    position: fixed;
+    top: 0;
+    left: 100%;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--bg);
+    z-index: 99;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+  }
+
+  .mobile-menu.open {
+    transform: translateX(-100%);
+  }
+
+  .mobile-menu-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
+  }
+
+  .mobile-link {
+    font-family: var(--font-headlines);
+    font-size: 3.5rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: var(--transition-smooth);
+  }
+
+  .mobile-link:hover {
+    color: var(--accent);
+  }
+
+  /* Hamburger Active Animation */
+  .mobile-toggle.active .line:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+  }
+
+  .mobile-toggle.active .line:nth-child(2) {
+    opacity: 0;
+  }
+
+  .mobile-toggle.active .line:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+  }
+
+  @media (max-width: 768px) {
+    .nav-links {
+      display: none;
+    }
+    
+    .mobile-toggle {
+      display: flex;
+    }
+  }
+</style>
+
+<script>
+  // Handle scroll trigger transparency and blur
+  const navContainer = document.querySelector('.nav-container');
+  
+  const checkScroll = () => {
+    if (window.scrollY > 20) {
+      navContainer?.classList.add('scrolled');
+    } else {
+      navContainer?.classList.remove('scrolled');
+    }
+  };
+
+  window.addEventListener('scroll', checkScroll);
+  checkScroll();
+
+  // Mobile menu toggle logic
+  const mobileToggle = document.getElementById('mobile-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const mobileLinks = document.querySelectorAll('.mobile-link');
+
+  const toggleMenu = () => {
+    mobileToggle?.classList.toggle('active');
+    mobileMenu?.classList.toggle('open');
+    document.body.classList.toggle('no-scroll');
+  };
+
+  mobileToggle?.addEventListener('click', toggleMenu);
+
+  mobileLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      mobileToggle?.classList.remove('active');
+      mobileMenu?.classList.remove('open');
+      document.body.classList.remove('no-scroll');
+    });
+  });
+</script>
